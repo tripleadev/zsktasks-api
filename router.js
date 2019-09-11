@@ -13,14 +13,24 @@ router.get("/", (req, res) => {
 router.post(
   "/add",
   [
-    check("title").isLength({ min: 4, max: 30 }),
-    check("description").isLength({ min: 4, max: 500 }),
-    check("date").isISO8601(),
-    check("subject").isLength({ min: 2, max: 30 })
+    check("title", "Podaj tytuł zadania").isLength({ min: 4, max: 30 }),
+    check("description", "Podaj opis zadania").isLength({ min: 4, max: 500 }),
+    check("date", "Podaj datę wykonania zadania").isISO8601(),
+    check(
+      "subject",
+      "Podaj przedmiot, na który zostało zadane zadanie"
+    ).isLength({ min: 2, max: 30 }),
+    check("uploadCode").custom(code => {
+      if (code === "ZadaniaPierwszaC") {
+        return true
+      } else {
+        throw new Error("Zły kod zabezpieczający")
+      }
+    })
   ],
   async (req, res) => {
     const errors = validationResult(req)
-    if (!errors.isEmpty) {
+    if (!errors.isEmpty()) {
       return res.status(422).json({
         message: "Errors in request",
         errors: errors
