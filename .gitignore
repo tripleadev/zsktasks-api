@@ -2,5 +2,4 @@ node_modules/
 yarn.lock
 .vscode
 
-database.json
 database.sql
