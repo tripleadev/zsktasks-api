@@ -70,11 +70,17 @@ router.post(
 
 router.get("/all", (req, res) => {
   Task.fetchAll().then(tasks => {
+    let filtered = tasks.filter(task => {
+      const date = moment(task.attributes.date)
+
+      return date.isAfter(moment.now()) ? task : null
+    })
+
     let responseObject = {
       tasks: []
     }
 
-    tasks.map(task => {
+    filtered.map(task => {
       let d = moment(task.attributes.date)
 
       const correctedTask = {
