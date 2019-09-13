@@ -73,7 +73,7 @@ router.get("/all", (req, res) => {
     let filtered = tasks.filter(task => {
       const date = moment(task.attributes.date)
 
-      return date.isAfter(moment.now()) ? task : null
+      return date.isAfter(moment().subtract(1, "days")) ? task : null
     })
 
     let responseObject = {
