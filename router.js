@@ -69,32 +69,35 @@ router.post(
 )
 
 router.get("/all", (req, res) => {
-  Task.fetchAll().then(tasks => {
-    let filtered = tasks.filter(task => {
-      const date = moment(task.attributes.date)
+  Task.forge()
+    .orderBy("date")
+    .fetchAll()
+    .then(tasks => {
+      let filtered = tasks.filter(task => {
+        const date = moment(task.attributes.date)
 
-      return date.isAfter(moment().subtract(1, "days")) ? task : null
-    })
+        return date.isAfter(moment().subtract(1, "days")) ? task : null
+      })
 
-    let responseObject = {
-      tasks: []
-    }
-
-    filtered.map(task => {
-      let d = moment(task.attributes.date)
-
-      const correctedTask = {
-        title: task.attributes.title,
-        description: task.attributes.description,
-        subject: task.attributes.subject,
-        date: d.format("DD/MM/YYYY")
+      let responseObject = {
+        tasks: []
       }
 
-      responseObject.tasks.push(correctedTask)
-    })
+      filtered.map(task => {
+        let d = moment(task.attributes.date)
 
-    res.json(responseObject)
-  })
+        const correctedTask = {
+          title: task.attributes.title,
+          description: task.attributes.description,
+          subject: task.attributes.subject,
+          date: d.format("DD/MM/YYYY")
+        }
+
+        responseObject.tasks.push(correctedTask)
+      })
+
+      res.json(responseObject)
+    })
 })
 
 module.exports = router
