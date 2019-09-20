@@ -3,6 +3,7 @@ const { check, validationResult } = require("express-validator")
 const chance = require("chance")()
 const moment = require("moment")
 const { Task } = require("./models")
+const cors = require("cors")
 
 router.get("/", (req, res) => {
   return res.json({
@@ -12,6 +13,7 @@ router.get("/", (req, res) => {
 
 router.post(
   "/add",
+  cors(),
   [
     check("title", "Podaj tytuł zadania").isLength({ min: 4, max: 30 }),
     check("description", "Podaj opis zadania").isLength({ min: 4, max: 500 }),
