@@ -43,7 +43,7 @@ router.post(
       rows = await Task.where("task_id", task_id).count()
     } while (rows > 0)
 
-    const d = moment(req.body.data)
+    const d = moment(req.body.date)
 
     const newTask = new Task({
       task_id: task_id,
