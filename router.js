@@ -47,7 +47,7 @@ router.post(
     const newTask = new Task({
       task_id: task_id,
       title: req.body.title,
-      date: req.body.date,
+      date: moment(req.body.date).format("YYYY-MM-DD"),
       description: req.body.description,
       subject: req.body.subject
     })
@@ -59,7 +59,7 @@ router.post(
           message: "Task created successfully",
           data: {
             title: req.body.title,
-            date: d.format("YYYY-MM-DD"),
+            date: moment(req.body.date).format("YYYY-MM-DD"),
             description: req.body.description,
             subject: req.body.subject
           }
@@ -91,7 +91,8 @@ router.get("/all", (req, res) => {
           title: task.attributes.title,
           description: task.attributes.description,
           subject: task.attributes.subject,
-          date: d.format("DD/MM/YYYY")
+          date: d.format("DD/MM/YYYY"),
+          id: task.attributes.task_id
         }
 
         responseObject.tasks.push(correctedTask)
