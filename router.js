@@ -60,7 +60,7 @@ router.post(
           message: "Task created successfully",
           data: {
             title: req.body.title,
-            date: req.body.date,
+            date: d.format("YYYY-MM-DD"),
             description: req.body.description,
             subject: req.body.subject
           }
