@@ -6,6 +6,11 @@ const Task = bookshelf.Model.extend({
   tableName: "tasks"
 })
 
+const User = bookshelf.Model.extend({
+  tableName: "users"
+})
+
 module.exports = {
-  Task
+  Task,
+  User
 }

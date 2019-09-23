@@ -2,7 +2,7 @@ const router = require("express").Router()
 const { check, validationResult } = require("express-validator")
 const chance = require("chance")()
 const moment = require("moment")
-const { Task } = require("./models")
+const { Task } = require("../models")
 
 router.get("/", (req, res) => {
   return res.json({
@@ -21,7 +21,7 @@ router.post(
       "Podaj przedmiot, na który zostało zadane zadanie"
     ).isLength({ min: 2, max: 30 }),
     check("uploadCode").custom(code => {
-      if (code === "ZadaniaPierwszaC") {
+      if (code === process.env.UPLOAD_CODE) {
         return true
       } else {
         throw new Error("Zły kod zabezpieczający")
