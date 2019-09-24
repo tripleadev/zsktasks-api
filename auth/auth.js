@@ -3,7 +3,7 @@ const LocalStrategy = require("passport-local").Strategy
 const JWTStrategy = require("passport-jwt").Strategy
 const ExtractJwt = require("passport-jwt").ExtractJwt
 const { User } = require("../models")
-const bcrypt = require("bcrypt")
+const sha = require("sha.js")
 require("dotenv").config()
 
 passport.use(
@@ -20,7 +20,11 @@ passport.use(
             })
           }
 
-          if (bcrypt.compareSync(password, user.attributes.Pass)) {
+          if (
+            sha("sha256")
+              .update(password)
+              .digest("hex") === user.attributes.Pass
+          ) {
             return next(null, user.attributes, {
               message: "Logged in successfully"
             })
