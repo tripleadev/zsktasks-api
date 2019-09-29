@@ -1,16 +1,16 @@
-const databaseLoginData = require("./database.json")
-const knex = require("knex")({ client: "mysql", connection: databaseLoginData })
-const bookshelf = require("bookshelf")(knex)
+const databaseLoginData = require('./database.json')
+const knex = require('knex')({ client: 'mysql', connection: databaseLoginData })
+const bookshelf = require('bookshelf')(knex)
 
 const Task = bookshelf.Model.extend({
-  tableName: "tasks"
+  tableName: 'tasks',
 })
 
 const User = bookshelf.Model.extend({
-  tableName: "users"
+  tableName: 'users',
 })
 
 module.exports = {
   Task,
-  User
+  User,
 }

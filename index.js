@@ -1,12 +1,12 @@
-const express = require("express")
-const bodyParser = require("body-parser")
-const cors = require("cors")
-const passport = require("./auth/auth")
+const express = require('express')
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const passport = require('./auth/auth')
 
-const router = require("./routes/router")
-const adminRouter = require("./routes/admin.router")
+const router = require('./routes/router')
+const adminRouter = require('./routes/admin.router')
 
-require("dotenv").config()
+require('dotenv').config()
 
 const app = express()
 const port = process.env.PORT || 8080
@@ -16,8 +16,8 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use(passport.initialize())
 
-app.use("/", router)
-app.use("/admin", adminRouter)
+app.use('/', router)
+app.use('/admin', adminRouter)
 
 app.listen(port)
 console.log(`Listening on port ${port}`)
