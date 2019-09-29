@@ -45,9 +45,13 @@ passport.use(
   new LocalStrategy(
     {
       usernameField: 'email',
-      passwordField: 'password'
+      passwordField: 'password',
+      passReqToCallback: true,
     },
-    async (username, password, next) => {
+    async (req, username, password, next) => {
+      if (req.body.adminCode !== process.env.ADMIN_CODE) {
+        return next(null, false, { message: 'Wrong admin code' })
+      }
       if (await User.where('Username', username).count() > 0) {
         return next(null, false, { message: 'User already exists' })
       }
@@ -61,6 +65,7 @@ passport.use(
         UserID: userID,
         Username: username,
         Pass: sha('sha256').update(password).digest('hex'),
+        Name: req.body.name
       })
 
       newUser.save(null, { method: 'insert' }).then((user) => {

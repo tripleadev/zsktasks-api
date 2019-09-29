@@ -25,7 +25,19 @@ router.post('/login', (req, res, next) => {
   })(req, res, next)
 })
 
-router.post('/register', (req, res, next) => {
+router.post('/register', [
+  check('name').isLength({ min: 3, max: 80 }),
+  check('email').isEmail(),
+  check('password').exists(),
+  check('adminCode').exists()
+], (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      message: 'Errors in request',
+      errors
+    })
+  }
   passport.authenticate('register', { session: false }, (err, user, info) => {
     if (err || !user) {
       return res.status(400).json({
@@ -36,7 +48,7 @@ router.post('/register', (req, res, next) => {
     req.login(user, { session: false }, () => {
       const loginToken = jwt.sign(
         {
-          userId: user.UserID
+          userId: user.UserID,
         },
         process.env.JWT_SECRET,
       )
