@@ -1,0 +1,356 @@
+{
+	"monday": [
+		{
+			"lesson": "Etyka",
+			"startsAt": "8:00",
+			"endsAt": "8:45",
+			"notifyAt": "7:53",
+			"classroom": "22",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Etyka",
+			"startsAt": "8:50",
+			"endsAt": "9:35",
+			"notifyAt": "8:43",
+			"classroom": "22",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Pracownia Systemów Operacyjnych",
+			"startsAt": "9:50",
+			"endsAt": "10:35",
+			"notifyAt": "9:33",
+			"classroom": "42/43",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Język Polski",
+			"startsAt": "10:40",
+			"endsAt": "11:25",
+			"notifyAt": "10:33",
+			"classroom": "22",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Język Polski",
+			"startsAt": "11:30",
+			"endsAt": "12:15",
+			"notifyAt": "11:23",
+			"classroom": "22",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Urządzenia Techniki Komputerowej",
+			"startsAt": "12:30",
+			"endsAt": "13:15",
+			"notifyAt": "12:13",
+			"classroom": "44",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "Geografia",
+			"startsAt": "13:20",
+			"endsAt": "14:05",
+			"notifyAt": "13:13",
+			"classroom": "36",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Religia",
+			"startsAt": "14:10",
+			"endsAt": "14:55",
+			"notifyAt": "14:03",
+			"classroom": "34",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Biologia",
+			"startsAt": "15:00",
+			"endsAt": "15:45",
+			"notifyAt": "14:53",
+			"classroom": "37",
+			"laptopAllowed": true
+		}
+	],
+	"tuesday": [
+		{
+			"lesson": "Pracownia Sieci Komputerowych",
+			"startsAt": "8:00",
+			"endsAt": "8:45",
+			"notifyAt": "7:53",
+			"classroom": "42/43",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "Pracownia Sieci Komputerowych",
+			"startsAt": "8:50",
+			"endsAt": "9:35",
+			"notifyAt": "8:43",
+			"classroom": "42/43",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "Język Niemiecki",
+			"startsAt": "9:50",
+			"endsAt": "10:35",
+			"notifyAt": "9:33",
+			"classroom": "21/33",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "Urządzenia Techniki Komputerowej",
+			"startsAt": "10:40",
+			"endsAt": "11:25",
+			"notifyAt": "10:33",
+			"classroom": "44",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "Historia",
+			"startsAt": "11:30",
+			"endsAt": "12:15",
+			"notifyAt": "11:23",
+			"classroom": "37",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Fizyka",
+			"startsAt": "12:30",
+			"endsAt": "13:15",
+			"notifyAt": "12:13",
+			"classroom": "27",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Bezpieczeństwo i Higiena Pracy",
+			"startsAt": "13:20",
+			"endsAt": "14:05",
+			"notifyAt": "13:13",
+			"classroom": "36",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "",
+			"startsAt": "14:10",
+			"endsAt": "14:55",
+			"notifyAt": "14:03",
+			"classroom": "",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Wychowanie Fizyczne",
+			"startsAt": "15:00",
+			"endsAt": "15:45",
+			"notifyAt": "14:53",
+			"classroom": "SG1/SG2",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Wychowanie Fizyczne",
+			"startsAt": "15:50",
+			"endsAt": "16:35",
+			"notifyAt": "15:43",
+			"classroom": "SG1/SG2",
+			"laptopAllowed": false
+		}
+	],
+	"wednesday": [
+		{
+			"lesson": "Język Angielski",
+			"startsAt": "8:00",
+			"endsAt": "8:45",
+			"notifyAt": "7:53",
+			"classroom": "30/34",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "Systemy Operacyjne",
+			"startsAt": "8:50",
+			"endsAt": "9:35",
+			"notifyAt": "8:43",
+			"classroom": "26",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "Język Angielski",
+			"startsAt": "9:50",
+			"endsAt": "10:35",
+			"notifyAt": "9:33",
+			"classroom": "30/34",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "Zajęcia z wychowawcą",
+			"startsAt": "10:40",
+			"endsAt": "11:25",
+			"notifyAt": "10:33",
+			"classroom": "27",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Matematyka",
+			"startsAt": "11:30",
+			"endsAt": "12:15",
+			"notifyAt": "11:23",
+			"classroom": "18",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Systemy Operacyjne",
+			"startsAt": "12:30",
+			"endsAt": "13:15",
+			"notifyAt": "12:13",
+			"classroom": "57",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "Język Niemiecki",
+			"startsAt": "13:20",
+			"endsAt": "14:05",
+			"notifyAt": "13:13",
+			"classroom": "21/33",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "Język Polski",
+			"startsAt": "14:10",
+			"endsAt": "14:55",
+			"notifyAt": "14:03",
+			"classroom": "22",
+			"laptopAllowed": false
+		}
+	],
+	"thursday": [
+		{
+			"lesson": "Edukacja dla Bezpieczeństwa",
+			"startsAt": "8:00",
+			"endsAt": "8:45",
+			"notifyAt": "7:53",
+			"classroom": "34",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Matematyka",
+			"startsAt": "8:50",
+			"endsAt": "9:35",
+			"notifyAt": "8:43",
+			"classroom": "18",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Informatyka",
+			"startsAt": "9:50",
+			"endsAt": "10:35",
+			"notifyAt": "9:33",
+			"classroom": "58/50",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Pracownia Urządzeń Techniki Komputerowej",
+			"startsAt": "10:40",
+			"endsAt": "11:25",
+			"notifyAt": "10:33",
+			"classroom": "61/62",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "Systemy Operacyjne",
+			"startsAt": "11:30",
+			"endsAt": "12:15",
+			"notifyAt": "11:23",
+			"classroom": "36",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "Plastyka",
+			"startsAt": "12:30",
+			"endsAt": "13:15",
+			"notifyAt": "12:13",
+			"classroom": "33",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "Religia",
+			"startsAt": "13:20",
+			"endsAt": "14:05",
+			"notifyAt": "13:13",
+			"classroom": "31",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Matematyka",
+			"startsAt": "14:10",
+			"endsAt": "14:55",
+			"notifyAt": "14:03",
+			"classroom": "18",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Historia",
+			"startsAt": "15:00",
+			"endsAt": "15:45",
+			"notifyAt": "14:53",
+			"classroom": "36",
+			"laptopAllowed": false
+		}
+	],
+	"friday": [
+		{
+			"lesson": "Język Angielski",
+			"startsAt": "8:00",
+			"endsAt": "8:45",
+			"notifyAt": "7:53",
+			"classroom": "30/34",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "Język Angielski",
+			"startsAt": "8:50",
+			"endsAt": "9:35",
+			"notifyAt": "8:43",
+			"classroom": "30/34",
+			"laptopAllowed": true
+		},
+		{
+			"lesson": "",
+			"startsAt": "9:50",
+			"endsAt": "10:35",
+			"notifyAt": "9:33",
+			"classroom": "",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Wychowanie Fizyczne",
+			"startsAt": "10:40",
+			"endsAt": "11:25",
+			"notifyAt": "10:33",
+			"classroom": "SG3/SG4",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "",
+			"startsAt": "11:30",
+			"endsAt": "12:15",
+			"notifyAt": "11:23",
+			"classroom": "",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Chemia",
+			"startsAt": "12:30",
+			"endsAt": "13:15",
+			"notifyAt": "12:13",
+			"classroom": "26",
+			"laptopAllowed": false
+		},
+		{
+			"lesson": "Sieci Komputerowe",
+			"startsAt": "13:20",
+			"endsAt": "14:05",
+			"notifyAt": "13:13",
+			"classroom": "44",
+			"laptopAllowed": true
+		}
+	]
+}
