@@ -1,14 +1,9 @@
 const router = require('express').Router()
-const {
-  check,
-  validationResult
-} = require('express-validator')
+const { check, validationResult } = require('express-validator')
 const chance = require('chance')()
 const moment = require('moment')
-const fs = require('fs')
-const {
-  Task
-} = require('../models')
+const { Task } = require('../models')
+
 const timetable = require('../timetable.json')
 
 router.get('/', (req, res) => {
