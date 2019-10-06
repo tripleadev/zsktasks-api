@@ -1,10 +1,15 @@
 const router = require('express').Router()
-const { check, validationResult } = require('express-validator')
+const {
+  check,
+  validationResult
+} = require('express-validator')
 const chance = require('chance')()
 const moment = require('moment')
 const fs = require('fs')
-const { Task } = require('../models')
-let timetable = JSON.parse(fs.readFile('../timetable.json'))
+const {
+  Task
+} = require('../models')
+const timetable = require('../timetable.json')
 
 router.get('/', (req, res) => {
   return res.json({
@@ -15,8 +20,14 @@ router.get('/', (req, res) => {
 router.post(
   '/add',
   [
-    check('title', 'Podaj tytuł zadania').isLength({ min: 4, max: 30 }),
-    check('description', 'Podaj opis zadania').isLength({ min: 4, max: 500 }),
+    check('title', 'Podaj tytuł zadania').isLength({
+      min: 4,
+      max: 30
+    }),
+    check('description', 'Podaj opis zadania').isLength({
+      min: 4,
+      max: 500
+    }),
     check('date', 'Podaj datę wykonania zadania').isISO8601(),
     check('subject', 'Podaj przedmiot, na który zostało zadane zadanie').isLength({
       min: 2,
@@ -55,7 +66,9 @@ router.post(
     })
 
     newTask
-      .save(null, { method: 'insert' })
+      .save(null, {
+        method: 'insert'
+      })
       .then(() => {
         res.status(200).json({
           message: 'Task created successfully',
