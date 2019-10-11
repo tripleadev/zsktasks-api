@@ -74,7 +74,7 @@ router.get('/user', passport.authorize('jwt', {}), (req, res) => {
   })
 })
 
-router.delete(
+router.post(
   '/delete_task',
   passport.authorize('jwt', {}),
   [check('task_id', 'Podaj identyfikator zadania do usunięcia').isLength({ min: 8, max: 8 })],
