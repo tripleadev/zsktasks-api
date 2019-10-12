@@ -110,29 +110,36 @@ router.post(
         errors: errors,
       })
     }
-    console.log(req.body.task_id)
+
     Task.where('task_id', req.body.task_id)
       .fetch()
       .then((task) => {
-        if (validator.isLength(req.body.title, { min: 4, max: 30 })) {
-          task.set('title', req.body.title)
+        let newAttributes = {}
+        if (req.body.title && validator.isLength(req.body.title, { min: 4, max: 30 })) {
+          newAttributes.title = req.body.title
         }
-        if (validator.isLength(req.body.description, { min: 4, max: 500 })) {
-          task.set('description', req.body.description)
+        if (
+          req.body.description &&
+          validator.isLength(req.body.description, { min: 4, max: 500 })
+        ) {
+          newAttributes.description = req.body.description
         }
-        if (validator.isISO8601(req.body.date)) {
-          task.set('date', req.body.date)
+        if (req.body.date && validator.isISO8601(req.body.date)) {
+          newAttributes.date = req.body.date
         }
-        if (validator.isLength(req.body.subject, { min: 2, max: 30 })) {
-          task.set('subject', req.body.subject)
+        if (req.body.subject && validator.isLength(req.body.subject, { min: 2, max: 30 })) {
+          newAttributes.subject = req.body.subject
         }
 
-        task.save(null, { method: 'update', patch: 'true' }).then((task) => {
-          res.json({
-            message: 'Task corrected',
-            task: task.attributes,
+        task
+          .where('task_id', req.body.task_id)
+          .save(newAttributes, { method: 'update', patch: 'true' })
+          .then((task) => {
+            res.json({
+              message: 'Task corrected',
+              task: task.attributes,
+            })
           })
-        })
       })
       .catch((err) => {
         console.log(err)
