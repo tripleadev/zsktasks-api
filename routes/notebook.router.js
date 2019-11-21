@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 router.post(
   '/addDay',
   passport.authorize('jwt', {}),
-  [check('userID').isLength({ min: 8, max: 8 }), check('date').isISO8601()],
+  [check('username').exists(), check('date').isISO8601()],
   (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -22,16 +22,16 @@ router.post(
         errors,
       })
     }
-    User.where({ userID: req.body.userID })
+    User.where({ Name: req.body.username })
       .fetch()
       .then((user) => {
         if (!user) {
           return res.status(400).json({
-            message: `UserID doesn't relate to any user`,
+            message: `Can't find any user with given name and surname`,
           })
         }
         const newDay = new NotebookDay({
-          userID: req.body.userID,
+          userID: user.attributes.UserID,
           date: moment(req.body.date).format('YYYY-MM-DD'),
           comment: req.body.comment,
         })
