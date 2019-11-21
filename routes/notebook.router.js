@@ -2,6 +2,7 @@ const router = require('express').Router()
 const moment = require('moment')
 const { check, validationResult } = require('express-validator')
 const { NotebookDay, User } = require('../models')
+const passport = require('passport')
 
 router.get('/', (req, res) => {
   NotebookDay.fetchAll({ withRelated: ['user'] }).then((days) => {
@@ -11,6 +12,7 @@ router.get('/', (req, res) => {
 
 router.post(
   '/addDay',
+  passport.authorize('jwt', {}),
   [check('userID').isLength({ min: 8, max: 8 }), check('date').isISO8601()],
   (req, res) => {
     const errors = validationResult(req)
@@ -51,27 +53,32 @@ router.post(
   },
 )
 
-router.post('/deleteDay', [check('date').isISO8601()], (req, res) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.status(400).json({
-      message: 'Errors in request',
-      errors,
-    })
-  }
-  NotebookDay.where({ date: req.body.date })
-    .destroy()
-    .then(() => {
-      res.json({
-        message: 'Sucessfully deleted entry',
+router.post(
+  '/deleteDay',
+  passport.authorize('jwt', {}),
+  [check('date').isISO8601()],
+  (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        message: 'Errors in request',
+        errors,
       })
-    })
-    .catch((err) => {
-      return res.json({
-        message: 'Error while deleting entry',
-        err,
+    }
+    NotebookDay.where({ date: req.body.date })
+      .destroy()
+      .then(() => {
+        res.json({
+          message: 'Sucessfully deleted entry',
+        })
       })
-    })
-})
+      .catch((err) => {
+        return res.json({
+          message: 'Error while deleting entry',
+          err,
+        })
+      })
+  },
+)
 
 module.exports = router
