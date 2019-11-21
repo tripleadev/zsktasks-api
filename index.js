@@ -5,6 +5,7 @@ const passport = require('./auth/auth')
 
 const router = require('./routes/router')
 const adminRouter = require('./routes/admin.router')
+const notebookRouter = require('./routes/notebook.router')
 
 require('dotenv').config()
 
@@ -18,6 +19,7 @@ app.use(passport.initialize())
 
 app.use('/', router)
 app.use('/admin', adminRouter)
+app.use('/notebookSchedule', notebookRouter)
 
 app.listen(port)
 console.log(`Listening on port ${port}`)

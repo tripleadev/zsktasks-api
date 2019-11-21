@@ -7,10 +7,21 @@ const Task = bookshelf.Model.extend({
 })
 
 const User = bookshelf.Model.extend({
-  tableName: 'users'
+  tableName: 'users',
+  notebookDays() {
+    return this.hasMany(NotebookDay, 'UserID')
+  },
+})
+
+const NotebookDay = bookshelf.Model.extend({
+  tableName: 'notebook',
+  user() {
+    return this.belongsTo(User, 'userID', 'UserID')
+  },
 })
 
 module.exports = {
   Task,
   User,
+  NotebookDay,
 }

@@ -7,7 +7,7 @@ const validator = require('validator')
 const { User, Task } = require('../models')
 
 router.post('/login', (req, res, next) => {
-  passport.authenticate('login', { session: false }, (err, user, info) => {
+  passport.authenticate('adminLogin', { session: false }, (err, user, info) => {
     if (err || !user) {
       return res.status(400).json({
         message: 'Something is wrong',
@@ -49,15 +49,7 @@ router.post(
           info: info,
         })
       }
-      req.login(user, { session: false }, () => {
-        const loginToken = jwt.sign(
-          {
-            userId: user.UserID,
-          },
-          process.env.JWT_SECRET,
-        )
-        return res.json({ message: 'Successfully created new user', loginToken, user })
-      })
+      return res.json({ message: 'Successfully created new user', user })
     })(req, res, next)
   },
 )
