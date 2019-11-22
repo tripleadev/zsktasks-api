@@ -5,9 +5,12 @@ const { NotebookDay, User } = require('../models')
 const passport = require('passport')
 
 router.get('/', (req, res) => {
-  NotebookDay.fetchAll({ withRelated: ['user'] }).then((days) => {
-    res.json(days)
-  })
+  new NotebookDay()
+    .orderBy('date', 'asc')
+    .fetchAll({ withRelated: ['user'] })
+    .then((days) => {
+      res.json(days)
+    })
 })
 
 router.post(
