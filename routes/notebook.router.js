@@ -48,8 +48,7 @@ router.post(
           })
           .catch((err) => {
             return res.json({
-              message: 'Error while adding new entry',
-              error: err.sqlMessage,
+              message: err.sqlMessage,
             })
           })
       })
