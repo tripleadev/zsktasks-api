@@ -4,7 +4,7 @@ const chance = require('chance')()
 const moment = require('moment')
 const { Task } = require('../models')
 
-const timetable = require('../timetable.json')
+const timetable = require('../data/timetable.json')
 
 router.get('/', (req, res) => {
   return res.json({
@@ -17,11 +17,11 @@ router.post(
   [
     check('title', 'Podaj tytuł zadania').isLength({
       min: 4,
-      max: 30
+      max: 30,
     }),
     check('description', 'Podaj opis zadania').isLength({
       min: 4,
-      max: 500
+      max: 500,
     }),
     check('date', 'Podaj datę wykonania zadania').isISO8601(),
     check('subject', 'Podaj przedmiot, na który zostało zadane zadanie').isLength({
@@ -62,7 +62,7 @@ router.post(
 
     newTask
       .save(null, {
-        method: 'insert'
+        method: 'insert',
       })
       .then(() => {
         res.status(200).json({
