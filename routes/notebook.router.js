@@ -1,7 +1,8 @@
 const router = require('express').Router()
 const moment = require('moment')
 const { check, validationResult } = require('express-validator')
-const { NotebookDay, User } = require('../models')
+const NotebookDay = require('../models/NotebookDay')
+const User = require('../models/User')
 const passport = require('passport')
 
 router.get('/', (req, res) => {

@@ -1,14 +1,13 @@
 const router = require('express').Router()
 const { check, validationResult } = require('express-validator')
-const chance = require('chance')()
 const moment = require('moment')
-const { Task } = require('../models')
+const Task = require('../models/Task')
 
 const timetable = require('../timetable.json')
 
 router.get('/', (req, res) => {
   return res.json({
-    message: 'welcome to zskTasks-api',
+    message: 'Welcome to zskTasks-api',
   })
 })
 
@@ -17,11 +16,11 @@ router.post(
   [
     check('title', 'Podaj tytuł zadania').isLength({
       min: 4,
-      max: 30
+      max: 30,
     }),
     check('description', 'Podaj opis zadania').isLength({
       min: 4,
-      max: 500
+      max: 500,
     }),
     check('date', 'Podaj datę wykonania zadania').isISO8601(),
     check('subject', 'Podaj przedmiot, na który zostało zadane zadanie').isLength({
@@ -46,33 +45,19 @@ router.post(
       })
     }
 
-    let taskId, rows
-    do {
-      taskId = chance.bb_pin()
-      rows = await Task.where('task_id', taskId).count()
-    } while (rows > 0)
-
     const newTask = new Task({
-      task_id: taskId,
       title: req.body.title,
+      subject: req.body.subject,
       date: moment(req.body.date).format('YYYY-MM-DD'),
       description: req.body.description,
-      subject: req.body.subject,
     })
 
     newTask
-      .save(null, {
-        method: 'insert'
-      })
-      .then(() => {
-        res.status(200).json({
+      .save()
+      .then((savedTask) => {
+        res.status(201).json({
           message: 'Task created successfully',
-          data: {
-            title: req.body.title,
-            date: moment(req.body.date).format('YYYY-MM-DD'),
-            description: req.body.description,
-            subject: req.body.subject,
-          },
+          data: savedTask,
         })
       })
       .catch((err) => console.log(err))
@@ -80,36 +65,33 @@ router.post(
 )
 
 router.get('/all', (req, res) => {
-  Task.forge()
-    .orderBy('date')
-    .fetchAll()
-    .then((tasks) => {
-      const filtered = tasks.filter((task) => {
-        const date = moment(task.attributes.date)
+  Task.find({}).then((tasks) => {
+    const filtered = tasks.filter((task) => {
+      const date = moment(task.date)
 
-        return date.isAfter(moment().subtract(1, 'days')) ? task : null
-      })
+      return date.isAfter(moment().subtract(1, 'days')) ? task : null
+    })
 
-      const responseObject = {
-        tasks: [],
+    const responseObject = {
+      tasks: [],
+    }
+
+    filtered.map((task) => {
+      const d = moment(task.date)
+
+      const correctedTask = {
+        title: task.title,
+        description: task.description,
+        subject: task.subject,
+        date: d.format('DD/MM/YYYY'),
+        id: task.task_id,
       }
 
-      filtered.map((task) => {
-        const d = moment(task.attributes.date)
-
-        const correctedTask = {
-          title: task.attributes.title,
-          description: task.attributes.description,
-          subject: task.attributes.subject,
-          date: d.format('DD/MM/YYYY'),
-          id: task.attributes.task_id,
-        }
-
-        responseObject.tasks.push(correctedTask)
-      })
-
-      res.json(responseObject)
+      responseObject.tasks.push(correctedTask)
     })
+
+    res.json(responseObject)
+  })
 })
 
 router.get('/timetable', (req, res) => {
