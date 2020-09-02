@@ -2,7 +2,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const JWTStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
-const { User } = require('../models')
+const User = require('../models/User')
 const sha = require('sha.js')
 const chance = require('chance')()
 require('dotenv').config()
@@ -15,10 +15,9 @@ passport.use(
       passwordField: 'password',
     },
     (email, password, next) => {
-      return new User({
-        Username: email,
+      return User.findOne({
+        email: email,
       })
-        .fetch()
         .then((user) => {
           if (!user) {
             return next(null, false, {
@@ -32,11 +31,7 @@ passport.use(
             })
           }
 
-          if (
-            sha('sha256')
-              .update(password)
-              .digest('hex') === user.attributes.Pass
-          ) {
+          if (sha('sha256').update(password).digest('hex') === user.attributes.Pass) {
             return next(null, user.attributes, {
               message: 'Logged in successfully',
             })
@@ -74,9 +69,7 @@ passport.use(
       const newUser = new User({
         UserID: userID,
         Username: username,
-        Pass: sha('sha256')
-          .update(password)
-          .digest('hex'),
+        Pass: sha('sha256').update(password).digest('hex'),
         Name: req.body.name,
         isAdmin: 0,
       })

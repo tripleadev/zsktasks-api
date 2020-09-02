@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken')
 const moment = require('moment')
 const { check, validationResult } = require('express-validator')
 const validator = require('validator')
-const { User, Task } = require('../models')
+const User = require('../models/User')
+const Task = require('../models/Task')
 
 router.post('/login', (req, res, next) => {
   passport.authenticate('adminLogin', { session: false }, (err, user, info) => {
@@ -17,7 +18,7 @@ router.post('/login', (req, res, next) => {
     req.login(user, { session: false }, () => {
       const token = jwt.sign(
         {
-          userId: user.UserID,
+          userId: user._id,
         },
         process.env.JWT_SECRET,
       )
@@ -55,9 +56,9 @@ router.post(
 )
 
 router.get('/user', passport.authorize('jwt', {}), (req, res) => {
-  return new User({ UserID: req.account.userId }).fetch().then((user) => {
+  User.findOne({ _id: req.account.userId }).then((user) => {
     if (!user) {
-      return res.status(400).json({ message: "Can't find user" })
+      return res.status(404).json({ message: "Can't find user" })
     }
     return res.json({
       message: 'User page',
@@ -78,21 +79,18 @@ router.post(
         errors,
       })
     }
-    return new Task()
-      .where({ task_id: req.body.task_id })
-      .destroy()
-      .then(() => {
-        res.json({
-          message: `Successfully deleted the task with id: ${req.body.task_id}`,
-        })
+    return Task.deleteOne({ _id: req.body.task_id }, () => {
+      res.json({
+        message: `Successfully deleted the task with id: ${req.body.task_id}`,
       })
+    })
   },
 )
 
 router.post(
   '/edit_task',
   passport.authorize('jwt', {}),
-  [check('task_id', 'Podaj identyfikator zadania do usunięcia').isLength({ min: 8, max: 8 })],
+  [check('task_id', 'Podaj identyfikator zadania do zedytowania').isLength({ min: 8, max: 8 })],
   (req, res) => {
     const errors = validationResult(req)
 
@@ -117,12 +115,12 @@ router.post(
       newAttributes.subject = req.body.subject
     }
 
-    Task.where('task_id', req.body.task_id)
-      .save(newAttributes, { method: 'update', patch: 'true' })
+    Task.findOne({ _id: req.body.task_id })
+      .save(newAttributes)
       .then((task) => {
         res.json({
           message: 'Task corrected',
-          task: task.attributes,
+          task: task,
         })
       })
       .catch((err) => {
@@ -133,28 +131,25 @@ router.post(
 )
 
 router.get('/all', passport.authorize('jwt', {}), (req, res) => {
-  Task.forge()
-    .orderBy('date')
-    .fetchAll()
-    .then((tasks) => {
-      let correctedTasks = []
+  Task.find({}).then((tasks) => {
+    let correctedTasks = []
 
-      tasks.map((task) => {
-        const d = moment(task.attributes.date)
+    tasks.map((task) => {
+      const d = moment(task.date)
 
-        const correctedTask = {
-          title: task.attributes.title,
-          description: task.attributes.description,
-          subject: task.attributes.subject,
-          date: d.format('DD/MM/YYYY'),
-          id: task.attributes.task_id,
-        }
+      const correctedTask = {
+        title: task.title,
+        description: task.description,
+        subject: task.subject,
+        date: d.format('DD/MM/YYYY'),
+        id: task._id,
+      }
 
-        correctedTasks.push(correctedTask)
-      })
-
-      return res.json({ tasks: correctedTasks })
+      correctedTasks.push(correctedTask)
     })
+
+    return res.json({ tasks: correctedTasks })
+  })
 })
 
 module.exports = router
