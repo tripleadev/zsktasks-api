@@ -10,10 +10,10 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   password: {
-    type: Date,
+    type: String,
     required: true,
   },
-  isAdmin: Boolean,
+  isAdmin: Number,
 })
 
 module.exports = mongoose.model('User', userSchema)
