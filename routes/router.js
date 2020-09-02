@@ -3,7 +3,7 @@ const { check, validationResult } = require('express-validator')
 const moment = require('moment')
 const Task = require('../models/Task')
 
-const timetable = require('../timetable.json')
+const timetable = require('../data/timetable.json')
 
 router.get('/', (req, res) => {
   return res.json({
