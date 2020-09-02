@@ -31,8 +31,12 @@ passport.use(
             })
           }
 
-          if (sha('sha256').update(password).digest('hex') === user.attributes.Pass) {
-            return next(null, user.attributes, {
+          if (
+            sha('sha256')
+              .update(password)
+              .digest('hex') === user.password
+          ) {
+            return next(null, user, {
               message: 'Logged in successfully',
             })
           } else {
@@ -55,29 +59,23 @@ passport.use(
       passReqToCallback: true,
     },
     async (req, username, password, next) => {
-      if ((await User.where('Username', username).count()) > 0) {
+      if ((await User.findOne({ email: username }).count()) > 0) {
         return next(null, false, {
           message: 'User already exists',
         })
       }
 
-      let userID
-      do {
-        userID = chance.bb_pin()
-      } while (User.where('UserID', userID).count() > 0)
-
       const newUser = new User({
-        UserID: userID,
-        Username: username,
-        Pass: sha('sha256').update(password).digest('hex'),
-        Name: req.body.name,
+        email: username,
+        password: sha('sha256')
+          .update(password)
+          .digest('hex'),
+        name: req.body.name,
         isAdmin: 0,
       })
 
       newUser
-        .save(null, {
-          method: 'insert',
-        })
+        .save()
         .then((user) => {
           next(null, user, {
             message: 'User created successfully',
