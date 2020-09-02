@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { check, validationResult } = require('express-validator')
 const moment = require('moment')
-const { getDutiesForWeek } = require('../data/duties')
+const { getDutiesForWeek } = require('../core/duties')
 
 function getLastSunday(date) {
   const day = date.getDay()
