@@ -50,7 +50,12 @@ router.get(
 
     const weekOfSchool = getWeekOfSchool(today)
 
-    res.json({ duties: getDutiesForWeek(weekOfSchool + 1) })
+    const nextDuties = []
+    for (let i = 0; i < 4; i++) {
+      nextDuties.push(getDutiesForWeek(weekOfSchool + i + 2))
+    }
+
+    res.json({ duties: getDutiesForWeek(weekOfSchool + 1), next: nextDuties })
   },
 )
 
