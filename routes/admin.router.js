@@ -90,7 +90,7 @@ router.post(
 router.post(
   '/edit_task',
   passport.authorize('jwt', {}),
-  [check('task_id', 'Podaj identyfikator zadania do zedytowania').isLength({ min: 8, max: 8 })],
+  [check('task_id', 'Podaj identyfikator zadania do zedytowania').isLength({ min: 1, max: 64 })],
   (req, res) => {
     const errors = validationResult(req)
 
@@ -115,8 +115,7 @@ router.post(
       newAttributes.subject = req.body.subject
     }
 
-    Task.findOne({ _id: req.body.task_id })
-      .save(newAttributes)
+    Task.findOneAndUpdate({ _id: req.body.task_id }, newAttributes)
       .then((task) => {
         res.json({
           message: 'Task corrected',
