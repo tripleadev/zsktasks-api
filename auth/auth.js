@@ -4,7 +4,7 @@ const JWTStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
 const User = require('../models/User')
 const sha = require('sha.js')
-const chance = require('chance')()
+
 require('dotenv').config()
 
 passport.use(

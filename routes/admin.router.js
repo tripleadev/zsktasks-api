@@ -33,7 +33,6 @@ router.post(
     check('name').isLength({ min: 3, max: 80 }),
     check('email').isEmail(),
     check('password').exists(),
-    check('adminCode').exists(),
   ],
   (req, res, next) => {
     const errors = validationResult(req)
