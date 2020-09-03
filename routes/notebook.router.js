@@ -26,6 +26,7 @@ router.post(
     const newDay = new NotebookDay({
       date: new Date(req.body.date),
       comment: req.body.comment,
+      name: req.body.name,
     })
 
     newDay
