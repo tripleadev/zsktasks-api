@@ -65,33 +65,17 @@ router.post(
 )
 
 router.get('/all', (req, res) => {
-  Task.find({}).then((tasks) => {
-    const filtered = tasks.filter((task) => {
-      const date = moment(task.date)
+  Task.find({})
+    .sort([['date', 'asc']])
+    .then((tasks) => {
+      const filtered = tasks.filter((task) => {
+        const date = moment(task.date)
 
-      return date.isAfter(moment().subtract(1, 'days')) ? task : null
+        return date.isAfter(moment().subtract(1, 'days')) ? task : null
+      })
+
+      res.json({ tasks: filtered })
     })
-
-    const responseObject = {
-      tasks: [],
-    }
-
-    filtered.map((task) => {
-      const d = moment(task.date)
-
-      const correctedTask = {
-        title: task.title,
-        description: task.description,
-        subject: task.subject,
-        date: d.format('DD/MM/YYYY'),
-        id: task.task_id,
-      }
-
-      responseObject.tasks.push(correctedTask)
-    })
-
-    res.json(responseObject)
-  })
 })
 
 router.get('/timetable', (req, res) => {

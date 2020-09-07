@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
-const moment = require('moment')
 const { check, validationResult } = require('express-validator')
 const validator = require('validator')
 const User = require('../models/User')
@@ -129,25 +128,11 @@ router.post(
 )
 
 router.get('/all', passport.authorize('jwt', {}), (req, res) => {
-  Task.find({}).then((tasks) => {
-    let correctedTasks = []
-
-    tasks.map((task) => {
-      const d = moment(task.date)
-
-      const correctedTask = {
-        title: task.title,
-        description: task.description,
-        subject: task.subject,
-        date: d.format('DD/MM/YYYY'),
-        id: task._id,
-      }
-
-      correctedTasks.push(correctedTask)
+  Task.find({})
+    .sort(['date', 'asc'])
+    .then((tasks) => {
+      return res.json({ tasks })
     })
-
-    return res.json({ tasks: correctedTasks })
-  })
 })
 
 module.exports = router
