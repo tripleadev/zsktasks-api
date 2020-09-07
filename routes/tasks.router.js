@@ -3,16 +3,8 @@ const { check, validationResult } = require('express-validator')
 const moment = require('moment')
 const Task = require('../models/Task')
 
-const timetable = require('../data/timetable.json')
-
-router.get('/', (req, res) => {
-  return res.json({
-    message: 'Welcome to zskTasks-api',
-  })
-})
-
 router.post(
-  '/add',
+  '/',
   [
     check('title', 'Podaj tytuł zadania').isLength({
       min: 4,
@@ -48,7 +40,7 @@ router.post(
     const newTask = new Task({
       title: req.body.title,
       subject: req.body.subject,
-      date: moment(req.body.date).format('YYYY-MM-DD'),
+      date: req.body.date,
       description: req.body.description,
     })
 
@@ -64,7 +56,7 @@ router.post(
   },
 )
 
-router.get('/all', (req, res) => {
+router.get('/', (req, res) => {
   Task.find({})
     .sort([['date', 'asc']])
     .then((tasks) => {
@@ -76,10 +68,6 @@ router.get('/all', (req, res) => {
 
       res.json({ tasks: filtered })
     })
-})
-
-router.get('/timetable', (req, res) => {
-  res.json(timetable)
 })
 
 module.exports = router
