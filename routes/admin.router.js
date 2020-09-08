@@ -65,8 +65,8 @@ router.get('/user', passport.authorize('jwt', {}), (req, res) => {
   })
 })
 
-router.post(
-  '/delete_task',
+router.delete(
+  '/tasks/:task_id',
   passport.authorize('jwt', {}),
   [check('task_id', 'Podaj identyfikator zadania do usunięcia').isLength({ min: 1, max: 128 })],
   (req, res) => {
@@ -77,16 +77,16 @@ router.post(
         errors,
       })
     }
-    return Task.deleteOne({ _id: req.body.task_id }, () => {
+    return Task.deleteOne({ _id: req.params.task_id }, () => {
       res.json({
-        message: `Successfully deleted the task with id: ${req.body.task_id}`,
+        message: `Successfully deleted the task with id: ${req.params.task_id}`,
       })
     })
   },
 )
 
-router.post(
-  '/edit_task',
+router.put(
+  '/tasks/:task_id',
   passport.authorize('jwt', {}),
   [check('task_id', 'Podaj identyfikator zadania do zedytowania').isLength({ min: 1, max: 64 })],
   (req, res) => {
@@ -113,7 +113,7 @@ router.post(
       newAttributes.subject = req.body.subject
     }
 
-    Task.findOneAndUpdate({ _id: req.body.task_id }, newAttributes)
+    Task.findOneAndUpdate({ _id: req.params.task_id }, newAttributes)
       .then((task) => {
         res.json({
           message: 'Task corrected',
@@ -127,9 +127,9 @@ router.post(
   },
 )
 
-router.get('/all', passport.authorize('jwt', {}), (req, res) => {
+router.get('/tasks', passport.authorize('jwt', {}), (req, res) => {
   Task.find({})
-    .sort(['date', 'asc'])
+    .sort([['date', 'asc']])
     .then((tasks) => {
       return res.json({ tasks })
     })
