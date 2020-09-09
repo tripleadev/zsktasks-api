@@ -1,10 +1,10 @@
 const router = require('express').Router()
 const { check, validationResult } = require('express-validator')
-const NotebookDay = require('../models/NotebookDay')
+const NotebookEntry = require('../models/NotebookEntry')
 const passport = require('passport')
 
 router.get('/', (req, res) => {
-  NotebookDay.find({}).then((days) => {
+  NotebookEntry.find({}).then((days) => {
     res.json(days)
   })
 })
@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 router.post(
   '/',
   passport.authorize('jwt', {}),
-  [check('comment').exists(), check('from').isISO8601(), check('to').isISO8601()],
+  [check('comment').exists(), check('name').exists(), check('cycle').isNumeric()],
   (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -22,9 +22,8 @@ router.post(
       })
     }
 
-    const newDay = new NotebookDay({
-      from: req.body.from,
-      to: req.body.to,
+    const newDay = new NotebookEntry({
+      cycle: req.body.cycle,
       comment: req.body.comment,
       name: req.body.name,
     })
@@ -45,7 +44,7 @@ router.post(
   },
 )
 
-router.delete('/:date', passport.authorize('jwt', {}), [check('date').isISO8601()], (req, res) => {
+router.delete('/:id', passport.authorize('jwt', {}), [check('id').exists()], (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -53,7 +52,7 @@ router.delete('/:date', passport.authorize('jwt', {}), [check('date').isISO8601(
       errors,
     })
   }
-  NotebookDay.findOne({ date: req.params.date })
+  NotebookEntry.findById(req.params.id)
     .remove()
     .then(() => {
       res.json({
