@@ -63,9 +63,9 @@ router.get('/', (req, res) => {
     .sort([['date', 'asc']])
     .then((tasks) => {
       const filtered = tasks.filter((task) => {
-        const date = moment(task.date)
+        const date = moment(task.date).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
 
-        return date.isAfter(moment().subtract(1, 'days')) ? task : null
+        return date.isAfter(moment().subtract(1, 'days'))
       })
 
       res.json({ tasks: filtered })

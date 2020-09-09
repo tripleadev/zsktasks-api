@@ -2,8 +2,17 @@ const router = require('express').Router()
 const { check, validationResult } = require('express-validator')
 const NotebookEntry = require('../models/NotebookEntry')
 const passport = require('passport')
+const moment = require('moment')
 
 router.get('/', (req, res) => {
+  const week = moment().week()
+
+  NotebookEntry.find({ cycle: week % 2 ? 1 : 2 }).then((days) => {
+    res.json(days)
+  })
+})
+
+router.get('/all', passport.authorize('jwt', {}), (req, res) => {
   NotebookEntry.find({}).then((days) => {
     res.json(days)
   })
