@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const notebookEntrySchema = new mongoose.Schema({
-  weekCycle: {
+  cycle: {
     type: Number,
     required: true,
   },
