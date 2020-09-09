@@ -1,7 +1,11 @@
 const mongoose = require('mongoose')
 
 const notebookDaySchema = new mongoose.Schema({
-  date: {
+  from: {
+    type: Date,
+    required: true,
+  },
+  to: {
     type: Date,
     required: true,
   },

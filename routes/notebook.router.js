@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 router.post(
   '/',
   passport.authorize('jwt', {}),
-  [check('comment').exists(), check('date').isISO8601()],
+  [check('comment').exists(), check('from').isISO8601(), check('to').isISO8601()],
   (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -23,7 +23,8 @@ router.post(
     }
 
     const newDay = new NotebookDay({
-      date: req.body.date,
+      from: req.body.from,
+      to: req.body.to,
       comment: req.body.comment,
       name: req.body.name,
     })
