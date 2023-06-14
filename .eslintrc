@@ -1,9 +1,0 @@
-{
-  "extends": ["standard"],
-  "rules": {
-    "prefer-const": "off",
-    "comma-dangle": "off",
-    "space-before-function-paren": "off",
-    "quotes": "off"
-  }
-}
